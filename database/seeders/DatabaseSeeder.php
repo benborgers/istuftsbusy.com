@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Location;
+use App\Models\Monitor;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -15,7 +16,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'jero@hey.com'
         ]);
 
-        Location::create(
+        $locations = [
             [
                 'name' => 'Joyce Cummings Center',
                 'informal_name' => 'JCC'
@@ -28,6 +29,12 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Tisch Library',
                 'informal_name' => 'Tisch Library'
             ]
-        );
+        ];
+
+        foreach($locations as $location) {
+            Monitor::factory()
+                ->for(Location::create($location))
+                ->create();
+        }
     }
 }
