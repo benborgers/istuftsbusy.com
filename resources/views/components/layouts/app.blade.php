@@ -12,7 +12,7 @@
     @vite(['resources/css/app.css'])
 </head>
 
-<body>
+<body class="sm:max-w-lg mx-auto p-8 antialiased">
     {{ $slot }}
 
     @fluxScripts
