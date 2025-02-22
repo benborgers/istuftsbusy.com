@@ -14,4 +14,9 @@ class Location extends Model
     {
         return $this->hasMany(Monitor::class);
     }
+
+    public function scans(): HasMany
+    {
+        return $this->hasMany(Scan::class);
+    }
 }

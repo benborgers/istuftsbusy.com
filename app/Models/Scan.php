@@ -5,9 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Monitor extends Model
+class Scan extends Model
 {
     use HasFactory;
 
@@ -16,8 +15,8 @@ class Monitor extends Model
         return $this->belongsTo(Location::class);
     }
 
-    public function scans(): HasMany
+    public function monitor(): BelongsTo
     {
-        return $this->hasMany(Scan::class);
+        return $this->belongsTo(Monitor::class);
     }
 }

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Location;
 use App\Models\Monitor;
+use App\Models\Scan;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -32,8 +33,15 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach($locations as $location) {
+            $Location = Location::create($location);
+
             Monitor::factory()
-                ->for(Location::create($location))
+                ->for($Location)
+                ->has(
+                    Scan::factory()
+                        ->for($Location)
+                        ->count(1000)
+                )
                 ->create();
         }
     }
