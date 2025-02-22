@@ -10,8 +10,13 @@ class ScanFactory extends Factory
     {
         $time = fake()->dateTimeBetween('-1 month', 'now');
 
+        // Seed the faker so it generates multiple of the same MAC address
+        fake()->seed(rand(0, $this->count/5));
+        $macAddress = fake()->macAddress();
+        fake()->seed();
+
         return [
-            'mac_address' => fake()->macAddress(),
+            'mac_address' => $macAddress,
             'updated_at' => $time,
             'created_at' => $time
         ];
