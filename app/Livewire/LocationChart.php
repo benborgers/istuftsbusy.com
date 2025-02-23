@@ -23,7 +23,7 @@ class LocationChart extends Component
         $data = [];
 
         for($i = 0; $i < count($pastData); $i++) {
-            $date = now()->startOfDay()->setMinutes($i * 15);
+            $date = now()->startOfDay()->setMinutes($i * $interval);
 
             $data[$i] = ['time' => $date->format('g:ia')];
             if(!empty($pastData[$i])) $data[$i]['past_value'] = $pastData[$i];
