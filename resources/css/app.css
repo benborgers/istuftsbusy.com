@@ -24,3 +24,11 @@
   --color-accent-content: var(--color-cyan-600);
   --color-accent-foreground: var(--color-white);
 }
+
+@layer theme {
+  .dark {
+    --color-accent: var(--color-cyan-600);
+    --color-accent-content: var(--color-cyan-400);
+    --color-accent-foreground: var(--color-white);
+  }
+}

@@ -40,7 +40,7 @@ class LocationChart extends Component
                 <flux:chart.viewport class="aspect-[3/1]">
                     <flux:chart.svg>
                         <flux:chart.line field="past" class="text-zinc-300 dark:text-white/40" stroke-dasharray="4 4" curve="none" />
-                        <flux:chart.line field="current" class="text-sky-500 dark:text-sky-400" curve="none" />
+                        <flux:chart.line field="current" class="text-accent" curve="none" />
 
                         <flux:chart.axis axis="x" field="time" tick-count="5">
                             <flux:chart.axis.grid />

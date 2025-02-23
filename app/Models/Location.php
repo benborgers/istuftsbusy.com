@@ -19,7 +19,7 @@ class Location extends Model
 
     /**
      * The unique MAC addresses detected over a 15 minute period for the last two weeks on this day
-     * 
+     *
      * @return float[]
      */
     public function averageScanCountsForLastTwoWeeks(): array
@@ -63,6 +63,11 @@ class Location extends Model
         ksort($scans);
 
         return $scans;
+    }
+
+    public function lastScanDate(): CarbonImmutable
+    {
+        return $this->scans()->latest()->first()->created_at;
     }
 
     public function monitors(): HasMany

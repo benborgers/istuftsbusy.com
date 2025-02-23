@@ -1,6 +1,6 @@
 @use(App\Support\Busyness)
 
-<div wire:poll.30s>
+<div>
     <flux:accordion transition exclusive>
         @foreach($this->locations as $location)
             <flux:accordion.item :expanded="$loop->first">
@@ -18,7 +18,18 @@
                 </flux:accordion.heading>
 
                 <flux:accordion.content>
-                    <livewire:location-chart :$location />
+                    <div class="flex gap-2 items-center">
+                        <div class="relative">
+                            <div class="h-2 w-2 bg-accent rounded-full"></div>
+                            <div class="absolute inset-0 h-2 w-2 bg-accent/50 rounded-full animate-ping"></div>
+                        </div>
+                        <p class="text-gray-400 text-sm font-medium">
+                            Last updated {{ $location->lastScanDate()->diffForHumans() }}
+                        </p>
+                    </div>
+                    <div class="mt-1">
+                        <livewire:location-chart :$location />
+                    </div>
                 </flux:accordion.content>
             </flux:accordion.item>
         @endforeach
