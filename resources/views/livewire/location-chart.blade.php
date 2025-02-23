@@ -8,6 +8,8 @@
         const canvas = document.getElementById('chart-' + $wire.id);
         const data = @json($this->data);
 
+        Chart.defaults.font.family = "'Clash Grotesk', sans-serif";
+
         const chart = new Chart(canvas, {
             type: 'line',
             data: {
@@ -36,15 +38,24 @@
                 maintainAspectRatio: false,
                 scales: {
                     x: {
+                        grid: {
+                            drawOnChartArea: false
+                        },
                         ticks: {
-                            maxTicksLimit: 5,
-                            align: 'start',
-                            font: {
-                                family: "'Clash Grotesk', sans-serif"
+                            callback(value, index, ticks) {
+                                const times = [
+                                    '3:00 AM',
+                                    '9:00 AM',
+                                    '3:00 PM',
+                                    '9:00 PM'
+                                ];
+
+                                const time = this.getLabelForValue(value);
+                                return times.includes(time) ? time.replace(':00', '') : null;
                             }
                         }
                     },
-                    y: { display: false }
+                    y: {  display: false }
                 },
                 plugins: {
                     legend: { display: false },
