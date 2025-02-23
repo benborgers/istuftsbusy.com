@@ -90,6 +90,7 @@ class Location extends Model
 
         if ($totalComparisonValues === 0) {
            $comparison = $this->scanCountsForRange(now()->startOfDay(), now(), $interval);
+           $totalComparisonValues = count($comparison);
         }
 
         $currentCount = last($this->scanCountsForRange(
