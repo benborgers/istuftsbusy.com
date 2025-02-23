@@ -10,6 +10,10 @@ class Scan extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'scan_at' => 'datetime'
+    ];
+
     public function location(): BelongsTo
     {
         return $this->belongsTo(Location::class);

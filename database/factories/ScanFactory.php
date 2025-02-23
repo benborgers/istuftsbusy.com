@@ -17,8 +17,7 @@ class ScanFactory extends Factory
 
         return [
             'mac_address' => $macAddress,
-            'updated_at' => $time,
-            'created_at' => $time
+            'scan_at' => $time
         ];
     }
 }
