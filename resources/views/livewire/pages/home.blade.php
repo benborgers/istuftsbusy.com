@@ -1,6 +1,6 @@
 @use(App\Support\Busyness)
 
-<div class="min-h-dvh flex flex-col gap-6 p-6">
+<div class="min-h-dvh flex flex-col gap-6 p-6 pt-8">
     <div>
         <h1 class="text-4xl font-serif text-center">
             <span>Is</span>
