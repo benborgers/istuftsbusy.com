@@ -23,17 +23,17 @@ class Location extends Model
      *
      * @return float[]
      */
-    public function averageScanCountsForLastTwoWeeks(int $interval): array
+    public function averageScanCountsForLastTwoWeeks(int $interval, ?string $timezone = 'America/New_York'): array
     {
         $oneWeekAgo = $this->scanCountsForRange(
-            now()->subWeek()->startOfDay(),
-            now()->subWeek()->endOfDay(),
+            now($timezone)->subWeek()->startOfDay(),
+            now($timezone)->subWeek()->endOfDay(),
             $interval
         );
 
         $twoWeeksAgo = $this->scanCountsForRange(
-            now()->subWeeks(2)->startOfDay(),
-            now()->subWeeks(2)->endOfDay(),
+            now($timezone)->subWeeks(2)->startOfDay(),
+            now($timezone)->subWeeks(2)->endOfDay(),
             $interval
         );
 
