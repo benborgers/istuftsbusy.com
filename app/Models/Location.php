@@ -91,12 +91,12 @@ class Location extends Model
         $interval = 15;
 
         // array_filter to remove null values
-        $comparison = array_filter($this->averageScanCountsForLastTwoWeeks($interval));
+        $comparison = array_filter(array_values($this->averageScanCountsForLastTwoWeeks($interval)));
         $totalComparisonValues = count($comparison);
 
         // There's no historical data
         if ($totalComparisonValues === 0) {
-           $comparison = $this->scanCountsForRange(now()->startOfDay(), now(), $interval);
+           $comparison = array_filter(array_values($this->scanCountsForRange(now()->startOfDay(), now(), $interval)));
            $totalComparisonValues = count($comparison);
         }
 
@@ -105,11 +105,11 @@ class Location extends Model
             return Busyness::Least;
         }
 
-        $currentCount = last($this->scanCountsForRange(
-            now()->subHour(),
+        $currentCount = last(array_filter(array_values($this->scanCountsForRange(
+            now()->startOfDay(),
             now(),
             $interval
-        ));
+        ))));
 
         $comparisonValuesLessThanCurrent = 0;
 
