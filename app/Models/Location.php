@@ -86,6 +86,11 @@ class Location extends Model
 
         // array_filter to remove null values
         $comparison = array_filter($this->averageScanCountsForLastTwoWeeks($interval));
+        $totalComparisonValues = count($comparison);
+
+        if ($totalComparisonValues === 0) {
+           $comparison = $this->scanCountsForRange(now()->startOfDay(), now(), $interval);
+        }
 
         $currentCount = last($this->scanCountsForRange(
             now()->subHour(),
@@ -94,7 +99,6 @@ class Location extends Model
         ));
 
         $comparisonValuesLessThanCurrent = 0;
-        $totalComparisonValues = count($comparison);
 
         foreach ($comparison as $value) {
             if ($value < $currentCount) {
