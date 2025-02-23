@@ -93,6 +93,10 @@ class Location extends Model
            $totalComparisonValues = count($comparison);
         }
 
+        if ($totalComparisonValues === 0) {
+            return Busyness::Least;
+        }
+
         $currentCount = last($this->scanCountsForRange(
             now()->subHour(),
             now(),
