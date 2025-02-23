@@ -6,7 +6,7 @@ enum Busyness
 {
     case Least;
     case Less;
-    case Normal;
+    case Medium;
     case More;
 
     public function label(): string
@@ -14,7 +14,7 @@ enum Busyness
         return match ($this) {
             self::Least => 'Empty',
             self::Less => 'Not Busy',
-            self::Normal => 'Medium Busy',
+            self::Medium => 'Medium Busy',
             self::More => 'Very Busy'
         };
     }
@@ -24,7 +24,7 @@ enum Busyness
         return match($this) {
             self::Least => 'zinc',
             self::Less => 'green',
-            self::Normal => 'cyan',
+            self::Medium => 'cyan',
             self::More => 'rose'
         };
     }

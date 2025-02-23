@@ -10,7 +10,7 @@
                             <span>{{ $location->informal_name }}</span>
                         </div>
 
-                        @php($busyness = $location->busyness)
+                        @php($busyness = $location->currentBusyness())
                         <flux:badge color="{{ $busyness->color() }}">
                             {{ $busyness->label() }}
                         </flux:badge>

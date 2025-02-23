@@ -72,12 +72,48 @@ class Location extends Model
             ->toArray();
 
         // We floor this so we don't include incomplete intervals
-        $numberOfIntervals = floor($start->diffInMinutes($end, absolute: true) / $interval);
+        $numberOfIntervals = round($start->diffInMinutes($end, absolute: true) / $interval);
         $scans = array_slice($scans, 0, $numberOfIntervals, preserve_keys: true);
 
         ksort($scans);
 
         return $scans;
+    }
+
+    public function currentBusyness(): Busyness
+    {
+        $interval = 15;
+
+        // array_filter to remove null values
+        $comparison = array_filter($this->averageScanCountsForLastTwoWeeks($interval));
+
+        $currentCount = last($this->scanCountsForRange(
+            now()->subHour(),
+            now(),
+            $interval
+        ));
+
+        $comparisonValuesLessThanCurrent = 0;
+        $totalComparisonValues = count($comparison);
+
+        foreach ($comparison as $value) {
+            if ($value < $currentCount) {
+                $comparisonValuesLessThanCurrent++;
+            }
+        }
+
+        $percentile = $comparisonValuesLessThanCurrent / $totalComparisonValues;
+
+        switch ($percentile) {
+            case $percentile < 0.2:
+                return Busyness::Least;
+            case $percentile < 0.4:
+                return Busyness::Less;
+            case $percentile < 0.6:
+                return Busyness::Medium;
+            default:
+                return Busyness::More;
+        }
     }
 
     public function lastScanDate(): CarbonImmutable | null
