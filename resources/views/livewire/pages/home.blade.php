@@ -1,7 +1,7 @@
 @use(App\Support\Busyness)
 
-<div class="min-h-dvh flex flex-col">
-    <div class="p-6">
+<div class="min-h-dvh flex flex-col gap-4 p-4">
+    <div>
         <h1 class="text-4xl font-serif text-center">
             <span>Is</span>
             <span class="text-accent">Tufts</span>
@@ -9,7 +9,7 @@
         </h1>
     </div>
 
-    <flux:accordion transition exclusive class="mt-12">
+    <flux:accordion transition exclusive>
         @foreach($this->locations as $location)
             <flux:accordion.item :expanded="$loop->first">
                 <flux:accordion.heading>
@@ -45,7 +45,7 @@
         @endforeach
     </flux:accordion>
 
-    <div class="p-4 border-t border-zinc-800/10 mt-auto">
+    <div class="pt-4 border-t border-zinc-800/10 mt-auto">
         <p class="text-sm text-zinc-500 font-medium text-center text-balance *:text-nowrap">
             Built by
             <span>Dan Bergen</span>,
