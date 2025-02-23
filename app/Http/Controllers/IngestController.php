@@ -11,13 +11,18 @@ class IngestController extends Controller
     {
         info('Received ingest request', [request()]);
 
-        $data = request()->validate([
-            'ip_address' => ['required', 'ip'],
-            'scans' => ['required', 'array'],
-            'scans.*.timestamp_ms' => ['required', 'int'],
-            'scans.*.mac_address' => ['required', 'mac_address'],
-            'scans.*.ssid' => ['nullable', 'string']
-        ]);
+        try {
+            $data = request()->validate([
+                'ip_address' => ['required', 'ip'],
+                'scans' => ['required', 'array'],
+                'scans.*.timestamp_ms' => ['required', 'int'],
+                'scans.*.mac_address' => ['required', 'mac_address'],
+                'scans.*.ssid' => ['nullable', 'string']
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            info('Validation failed', ['errors' => $e->errors()]);
+            throw $e;
+        }
 
         $monitor->scans()->createMany(
             collect($data['scans'])->map(fn($scan) => [
