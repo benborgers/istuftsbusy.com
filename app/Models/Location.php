@@ -76,7 +76,7 @@ class Location extends Model
         $scans = array_slice($scans, 0, $numberOfIntervals, preserve_keys: true);
 
         // Fill in intervals missing data with null
-        for($i = 0; $i < $numberOfIntervals; $i++) $scans[$i] = $scans[$i] ?? null;
+        for($i = 0; $i < $numberOfIntervals; $i++) $scans[$i] ??= null;
 
         ksort($scans);
 
