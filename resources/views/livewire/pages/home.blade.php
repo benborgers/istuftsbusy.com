@@ -19,7 +19,7 @@
 
                 <flux:accordion.content>
                     @if ($location->lastScanDate())
-                        <div class="flex gap-2 items-center">
+                        <div class="flex gap-2 items-center ml-1">
                             <div class="relative">
                                 <div class="h-2 w-2 bg-accent rounded-full"></div>
                                 <div class="absolute inset-0 h-2 w-2 bg-accent/50 rounded-full animate-ping"></div>
