@@ -18,7 +18,7 @@
                 </flux:accordion.heading>
 
                 <flux:accordion.content>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste dolorem quia ipsam voluptatem repellendus deserunt adipisci labore, distinctio ratione cumque, animi explicabo fugit hic rem vitae! Asperiores nemo nulla recusandae.
+                    <livewire:location-chart :$location />
                 </flux:accordion.content>
             </flux:accordion.item>
         @endforeach

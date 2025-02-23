@@ -13,9 +13,9 @@ enum Busyness
     {
         return match ($this) {
             self::Least => 'Empty',
-            self::Less => 'Less Busy',
-            self::Normal => 'Normal',
-            self::More => 'Busier'
+            self::Less => 'Not Busy',
+            self::Normal => 'Medium Busy',
+            self::More => 'Very  Busy'
         };
     }
 

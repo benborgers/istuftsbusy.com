@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
                 ->has(
                     Scan::factory()
                         ->for($Location)
-                        ->count(1000)
+                        ->count(10000)
                 )
                 ->create();
         }
