@@ -22,7 +22,7 @@ enum Busyness
     public function color(): string
     {
         return match($this) {
-            self::Least => 'gray',
+            self::Least => 'zinc',
             self::Less => 'green',
             self::Normal => 'cyan',
             self::More => 'rose'
