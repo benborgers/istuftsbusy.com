@@ -19,34 +19,50 @@ class Location extends Model
     }
 
     /**
+     * @param int $n The number of data points to generate
+     * @param int $min
+     * @param int $max
+     */
+    private function generateRandomData(int $n, int $min, int $max): array
+    {
+        srand(1);
+
+        $data = [];
+
+        for($i = 0; $i < $n; $i++) {
+            $point = pow(sin(pi() * $i / $n), 2) * ($max - $min) + $min;
+            $data[] = $point * rand(80, 120) / 100;
+        }
+
+        srand();
+        return $data;
+    }
+
+    /**
      * The unique MAC addresses detected over a 15 minute period for the last two weeks on this day
      *
      * @return float[]
      */
     public function averageScanCountsForLastTwoWeeks(int $interval, ?string $timezone = 'America/New_York'): array
     {
-        $oneWeekAgo = $this->scanCountsForRange(
-            now($timezone)->subWeek()->startOfDay(),
-            now($timezone)->subWeek()->endOfDay(),
-            $interval
-        );
+        // $oneWeekAgo = $this->scanCountsForRange(
+        //     now($timezone)->subWeek()->startOfDay(),
+        //     now($timezone)->subWeek()->endOfDay(),
+        //     $interval
+        // );
 
-        $twoWeeksAgo = $this->scanCountsForRange(
-            now($timezone)->subWeeks(2)->startOfDay(),
-            now($timezone)->subWeeks(2)->endOfDay(),
-            $interval
-        );
+        // $twoWeeksAgo = $this->scanCountsForRange(
+        //     now($timezone)->subWeeks(2)->startOfDay(),
+        //     now($timezone)->subWeeks(2)->endOfDay(),
+        //     $interval
+        // );
 
-        srand(1);
+        $range = match($this->informal_name) {
+            'Cummings' => [50, 700],
+            'Fitness Center' => [20, 100]
+        };
 
-        $fakeData = array_map(
-            fn() => rand(100, 1000),
-            $oneWeekAgo
-        );
-
-        srand();
-
-        return $fakeData;
+        return $this->generateRandomData(1440/$interval, ...$range);
     }
 
     /**
@@ -92,7 +108,7 @@ class Location extends Model
     {
         $interval = 15;
 
-        return cache()->remember("busyness-{$interval}-{$this->id}", now()->ceilMinutes($interval), function() use ($interval) {
+        // return cache()->remember("busyness-{$interval}-{$this->id}", now()->ceilMinutes($interval), function() use ($interval) {
             // array_filter to remove null values
             $comparison = array_filter(array_values($this->averageScanCountsForLastTwoWeeks($interval)));
             $totalComparisonValues = count($comparison);
@@ -133,7 +149,7 @@ class Location extends Model
             } else {
                 return Busyness::More;
             }
-        });
+        // });
     }
 
     public function lastScanDate(): CarbonImmutable | null
