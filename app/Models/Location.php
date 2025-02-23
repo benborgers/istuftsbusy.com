@@ -22,31 +22,42 @@ class Location extends Model
      *
      * @return float[]
      */
-    public function averageScanCountsForLastTwoWeeks(): array
+    public function averageScanCountsForLastTwoWeeks(int $interval): array
     {
-        $oneWeekAgo = $this->scanCountsForDay(now()->subWeek());
-        $twoWeeksAgo = $this->scanCountsForDay(now()->subWeeks(2));
+        $oneWeekAgo = $this->scanCountsForRange(
+            now()->subWeek()->startOfDay(),
+            now()->subWeek()->endOfDay(),
+            $interval
+        );
+
+        $twoWeeksAgo = $this->scanCountsForRange(
+            now()->subWeeks(2)->startOfDay(),
+            now()->subWeeks(2)->endOfDay(),
+            $interval
+        );
+
+        assert(count($oneWeekAgo) === count($twoWeeksAgo));
 
         $averages = [];
 
-        for($i = 0; $i < 96; $i++) {
+        for($i = 0; $i < count($oneWeekAgo); $i++) {
             $averages[$i] = ($oneWeekAgo[$i] + $twoWeeksAgo[$i]) / 2;
         }
 
         return $averages;
     }
 
-    public function scanCountsForDay($date): array
+    /**
+     * @param CarbonImmutable $start
+     * @param CarbonImmutable $end
+     * @param int $interval The windowing interval in minutes
+     */
+    public function scanCountsForRange($start, $end, int $interval): array
     {
-        $interval = 15;
-
         $scans = Scan::query()
-            ->whereBetween('created_at', [
-                $date->startOfDay(),
-                $date->endOfDay()
-            ])
-            ->selectRaw('HOUR(created_at) as hour')
-            ->selectRaw('FLOOR(MINUTE(created_at) / ?) as time_interval', [$interval])
+            ->whereBetween('scan_at', [$start, $end])
+            ->selectRaw('HOUR(scan_at) as hour')
+            ->selectRaw('FLOOR(MINUTE(scan_at) / ?) as time_interval', [$interval])
             ->selectRaw('COUNT(DISTINCT mac_address) as count')
             ->groupBy('hour', 'time_interval')
             ->orderBy('hour')
@@ -56,9 +67,12 @@ class Location extends Model
             ->map->count
             ->toArray();
 
-        for($i = 0; $i < 96; $i++) {
-            $scans[$i] = $scans[$i] ?? 0;
-        }
+        // We floor this so we don't include incomplete intervals
+        $numberOfIntervals = floor($start->diffInMinutes($end, absolute: true) / $interval);
+        $scans = array_slice($scans, 0, $numberOfIntervals, preserve_keys: true);
+
+        // Fill in intervals missing data with zeroes
+        for($i = 0; $i < $numberOfIntervals; $i++) $scans[$i] = $scans[$i] ?? 0;
 
         ksort($scans);
 
