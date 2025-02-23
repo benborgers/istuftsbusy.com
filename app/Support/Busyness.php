@@ -24,8 +24,8 @@ enum Busyness
         return match($this) {
             self::Least => 'gray',
             self::Less => 'green',
-            self::Normal => 'blue',
-            self::More => 'orange'
+            self::Normal => 'cyan',
+            self::More => 'rose'
         };
     }
 }
