@@ -17,7 +17,7 @@
                 datasets: [
                     {
                         label: 'Today',
-                        data: data.map(d => d.current_value), 
+                        data: data.map(d => d.current_value),
                         borderWidth: 3,
                         borderColor: color,
                         backgroundColor: color,
@@ -71,4 +71,8 @@
 
 @assets
     <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        console.log(@json($this->data));
+    </script>
 @endassets
