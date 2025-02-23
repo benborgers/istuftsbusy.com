@@ -13,6 +13,6 @@ class Home extends Component
     #[Computed]
     public function locations()
     {
-        return Location::orderBy('informal_name')->get();
+        return Location::orderBy('order')->get();
     }
 }
