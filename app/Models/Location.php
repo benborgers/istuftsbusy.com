@@ -66,15 +66,17 @@ class Location extends Model
             ->orderBy('time_interval')
             ->get()
             ->keyBy(fn($scan) => $start->addHours($scan->hour)->addMinutes($scan->time_interval * $interval)->toISOString())
-            ->map->count
-            ->toArray();
+            ->map->count;
+
+        // Remove the current interval because we don't have full data
+        $scans->pop();
 
         $period = CarbonPeriod::dates($start, $end);
 
         // We floor this so we don't include incomplete intervals
         // TODO: How does this handle incomplete intervals? (We would want it to exclude them.)
         $numberOfIntervals = $period->minutes($interval)->count();
-        $scans = array_slice($scans, 0, $numberOfIntervals, preserve_keys: true);
+        $scans = $scans->slice(0, $numberOfIntervals)->toArray();
 
         // Set intervals missing data to null
         foreach($period->minutes($interval) as $time) {

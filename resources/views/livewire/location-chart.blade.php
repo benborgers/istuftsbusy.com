@@ -40,24 +40,9 @@
                     },
                     y: { display: false }
                 },
-                interaction: {
-                    mode: 'index',
-                    intersect: false
-                },
                 plugins: {
-                    legend: {
-                        display: false
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return ''; // Return empty string to hide values
-                            },
-                            title: function(context) {
-                                return context[0].label; // Only show the time
-                            }
-                        }
-                    }
+                    legend: { display: false },
+                    tooltip: { enabled: false }
                 }
             }
         });
