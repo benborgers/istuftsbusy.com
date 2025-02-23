@@ -3,7 +3,7 @@
 <div wire:poll.30s>
     <flux:accordion transition exclusive>
         @foreach($this->locations as $location)
-            <flux:accordion.item>
+            <flux:accordion.item :expanded="$loop->first">
                 <flux:accordion.heading>
                     <div class="flex gap-4 justify-between items-center">
                         <div class="line-clamp-1 text-lg">
