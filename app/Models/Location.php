@@ -59,6 +59,7 @@ class Location extends Model
     public function scanCountsForRange($start, $end, int $interval): array
     {
         $scans = Scan::query()
+            ->where('location_id', $this->id)
             ->whereBetween('scan_at', [$start, $end])
             ->selectRaw('HOUR(scan_at) as hour')
             ->selectRaw('FLOOR(MINUTE(scan_at) / ?) as time_interval', [$interval])
