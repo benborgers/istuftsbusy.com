@@ -67,7 +67,7 @@ class Location extends Model
 
     public function lastScanDate(): CarbonImmutable
     {
-        return $this->scans()->latest()->first()->created_at;
+        return $this->scans()->latest()->first()?->created_at;
     }
 
     public function monitors(): HasMany
