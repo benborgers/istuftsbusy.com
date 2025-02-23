@@ -39,7 +39,7 @@ class LocationChart extends Component
     {
         return <<<'BLADE'
             <flux:chart class="grid gap-6" :value="$this->data">
-                <flux:chart.viewport class="aspect-[3/1]">
+                <flux:chart.viewport class="aspect-[5/2]">
                     <flux:chart.svg>
                         <flux:chart.line field="past_value" class="text-zinc-300 dark:text-white/40" stroke-dasharray="4 4" curve="none" />
                         <flux:chart.line field="current_value" class="text-accent" curve="none" />
