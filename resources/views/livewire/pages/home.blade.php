@@ -11,27 +11,9 @@
                             <span class="text-gray-400">{{ $location->name }}</span>
                         </div>
 
-                        <div class="*:size-3 *:rounded-full flex gap-1">
-                            @switch($location->busyness)
-                                @case(Busyness::Less)
-                                    <div class="bg-green-500"></div>
-                                    <div class="bg-gray-200"></div>
-                                    <div class="bg-gray-200"></div>
-                                @break
-
-                                @case(Busyness::Normal)
-                                    <div class="bg-blue-500"></div>
-                                    <div class="bg-blue-500"></div>
-                                    <div class="bg-gray-200"></div>
-                                @break
-
-                                @case(Busyness::More)
-                                    <div class="bg-orange-500"></div>
-                                    <div class="bg-orange-500"></div>
-                                    <div class="bg-orange-500"></div>
-                                @break
-                            @endswitch
-                        </div>
+                        <flux:badge color="{{ $location->busyness->color() }}">
+                            {{ $location->busyness->label() }}
+                        </flux:badge>
                     </div>
                 </flux:accordion.heading>
 

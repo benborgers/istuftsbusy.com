@@ -13,7 +13,7 @@ class Location extends Model
 
     public function getBusynessAttribute(): Busyness
     {
-        return Busyness::cases()[rand(0, 2)];
+        return collect(Busyness::cases())->random();
     }
 
     public function monitors(): HasMany
