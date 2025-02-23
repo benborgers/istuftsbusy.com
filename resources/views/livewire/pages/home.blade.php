@@ -1,6 +1,6 @@
 @use(App\Support\Busyness)
 
-<div class="min-h-dvh flex flex-col gap-4 p-4">
+<div class="min-h-dvh flex flex-col gap-6 p-6">
     <div>
         <h1 class="text-4xl font-serif text-center">
             <span>Is</span>
@@ -45,7 +45,9 @@
         @endforeach
     </flux:accordion>
 
-    <div class="pt-4 border-t border-zinc-800/10 mt-auto">
+    <hr class="border-zinc-800/10 mt-auto" />
+
+    <div>
         <p class="text-sm text-zinc-500 font-medium text-center text-balance *:text-nowrap">
             Built by
             <span>Dan Bergen</span>,
