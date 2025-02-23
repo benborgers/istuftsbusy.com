@@ -1,4 +1,4 @@
-<div>
+<div class="relative h-48">
     <canvas id="chart-{{ $this->id() }}"></canvas>
 </div>
 
@@ -8,7 +8,7 @@
         const canvas = document.getElementById('chart-' + $wire.id);
         const data = @json($this->data);
 
-        new Chart(canvas, {
+        const chart = new Chart(canvas, {
             type: 'line',
             data: {
                 labels: data.map(d => d.time),
@@ -33,6 +33,7 @@
             },
             options: {
                 animation: false,
+                maintainAspectRatio: false,
                 scales: {
                     x: {
                         ticks: {
@@ -51,6 +52,9 @@
                 }
             }
         });
+
+        // Update the chart when the fonts are loaded
+        document.fonts.addEventListener('loadingdone', () => chart.update());
     </script>
 @endscript
 
