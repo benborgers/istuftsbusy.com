@@ -67,7 +67,7 @@ class Location extends Model
             ->orderBy('hour')
             ->orderBy('time_interval')
             ->get()
-            ->keyBy(fn($scan) => $scan->hour * 4 + $scan->time_interval)
+            ->keyBy(fn($scan) => $scan->hour * (60/$interval) + $scan->time_interval)
             ->map->count
             ->toArray();
 
