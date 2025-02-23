@@ -39,7 +39,7 @@
                             maxTicksLimit: 5,
                             align: 'start',
                             font: {
-                                family: "'Clash Grotesk'"
+                                family: "'Clash Grotesk', sans-serif"
                             }
                         }
                     },
