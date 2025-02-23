@@ -12,16 +12,18 @@ class IngestController extends Controller
         info('request', [request()->all()]);
 
         $data = request()->validate([
-            'ip_address' => ['required', 'ip'],
+            'ip_address' => ['nullable', 'ip'],
             'scans' => ['array'],
             'scans.*.timestamp_ms' => ['required', 'int'],
             'scans.*.mac_address' => ['required', 'mac_address'],
             'scans.*.ssid' => ['nullable', 'string']
         ]);
 
-        $monitor->update([
-            'ip_address' => $data['ip_address']
-        ]);
+        if ($data['ip_address']) {
+            $monitor->update([
+                'ip_address' => $data['ip_address']
+            ]);
+        }
 
         $monitor->scans()->createMany(
             collect($data['scans'])->map(fn($scan) => [
