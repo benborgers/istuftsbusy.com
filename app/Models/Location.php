@@ -80,7 +80,7 @@ class Location extends Model
         foreach($period->minutes($interval) as $time) {
             $scans[$time->toISOString()] ??= null;
         }
-        
+
         ksort($scans);
 
         return $scans;
@@ -121,15 +121,14 @@ class Location extends Model
 
         $percentile = $comparisonValuesLessThanCurrent / $totalComparisonValues;
 
-        switch ($percentile) {
-            case $percentile < 0.2:
-                return Busyness::Least;
-            case $percentile < 0.4:
-                return Busyness::Less;
-            case $percentile < 0.6:
-                return Busyness::Medium;
-            default:
-                return Busyness::More;
+        if ($percentile < 0.2) {
+            return Busyness::Least;
+        } elseif ($percentile < 0.4) {
+            return Busyness::Less;
+        } elseif ($percentile < 0.6) {
+            return Busyness::Medium;
+        } else {
+            return Busyness::More;
         }
     }
 
