@@ -1,7 +1,13 @@
 @use(App\Support\Busyness)
 
-<div>
-    <flux:accordion transition exclusive>
+<div class="grid grid-rows-[max-content_1fr_max-content] min-h-dvh">
+    <div class="bg-zinc-100 rounded-b-xl pt-12 pb-6">
+        <h1 class="text-4xl font-serif text-center">
+            Is <span class="text-accent">Tufts</span> Busy?
+        </h1>
+    </div>
+
+    <flux:accordion transition exclusive class="mt-12">
         @foreach($this->locations as $location)
             <flux:accordion.item :expanded="$loop->first">
                 <flux:accordion.heading>
@@ -36,4 +42,10 @@
             </flux:accordion.item>
         @endforeach
     </flux:accordion>
+
+    <div class="bg-zinc-100 rounded-t-xl p-4">
+        <p class="text-sm text-zinc-500 font-medium text-center">
+            Made by Dan Bergen, Alex Williams-Ferreira, Jerome Paulos, and Ben Borgers.
+        <p>
+    </div>
 </div>

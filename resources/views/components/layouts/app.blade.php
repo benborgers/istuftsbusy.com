@@ -8,15 +8,18 @@
     <title>{{ $title }}</title>
     <link rel="icon" href="https://emojicdn.elk.sh/🐘">
 
-    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     @vite(['resources/css/app.css'])
 
     <link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&display=swap" rel="stylesheet">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
     @fluxAppearance
 </head>
 
-<body class="sm:max-w-lg mx-auto p-4 antialiased">
+<body class="sm:max-w-lg mx-auto px-4 antialiased">
     {{ $slot }}
 
     @fluxScripts
