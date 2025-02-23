@@ -15,7 +15,7 @@
                 <flux:accordion.heading class="hover:bg-zinc-600/5 rounded-lg p-2 -m-2 transition-colors">
                     <div class="flex gap-4 justify-between items-center">
                         <div class="line-clamp-1 text-lg leading-none">
-                            <p>{{ $location->name }}</p>
+                            <p>{{ $location->informal_name }}</p>
 
                             @if($location->lastScanDate())
                                 <div class="flex gap-2 items-center ml-1">
