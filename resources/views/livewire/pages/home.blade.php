@@ -1,6 +1,6 @@
 @use(App\Support\Busyness)
 
-<div>
+<div wire:poll.30s>
     <flux:accordion transition exclusive>
         @foreach($this->locations as $location)
             <flux:accordion.item>
