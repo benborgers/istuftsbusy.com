@@ -20,6 +20,7 @@ class IngestController extends Controller
         $monitor->scans()->createMany(
             collect($data['scans'])->map(fn($scan) => [
                 'location_id' => $monitor->location_id,
+                'ip_address' => $data['ip_address'],
                 'mac_address' => $scan['mac_address'],
                 'ssid' => $scan['ssid'],
                 'scan_at' => Carbon::createFromTimestampMs($scan['timestamp_ms'])
