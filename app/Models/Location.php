@@ -54,7 +54,7 @@ class Location extends Model
 
         $range = match($this->informal_name) {
             'Cummings' => [50, 700],
-            'Fitness Center' => [50, 300]
+            'Fitness Center' => [50, 500]
         };
 
         return $this->generateRandomData(1440/$interval, ...$range);
