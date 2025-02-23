@@ -67,16 +67,13 @@ class Location extends Model
             ->orderBy('hour')
             ->orderBy('time_interval')
             ->get()
-            ->keyBy(fn($scan) => $scan->hour * (60/$interval) + $scan->time_interval)
+            ->keyBy(fn($scan) => $start->addHours($scan->hour)->addMinutes($scan->time_interval * $interval))
             ->map->count
             ->toArray();
 
         // We floor this so we don't include incomplete intervals
         $numberOfIntervals = floor($start->diffInMinutes($end, absolute: true) / $interval);
         $scans = array_slice($scans, 0, $numberOfIntervals, preserve_keys: true);
-
-        // Fill in intervals missing data with null
-        for($i = 0; $i < $numberOfIntervals; $i++) $scans[$i] ??= null;
 
         ksort($scans);
 
