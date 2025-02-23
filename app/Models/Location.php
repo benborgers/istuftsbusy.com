@@ -88,11 +88,13 @@ class Location extends Model
         $comparison = array_filter($this->averageScanCountsForLastTwoWeeks($interval));
         $totalComparisonValues = count($comparison);
 
+        // There's no historical data
         if ($totalComparisonValues === 0) {
            $comparison = $this->scanCountsForRange(now()->startOfDay(), now(), $interval);
            $totalComparisonValues = count($comparison);
         }
 
+        // There's no historical data AND no current data
         if ($totalComparisonValues === 0) {
             return Busyness::Least;
         }
