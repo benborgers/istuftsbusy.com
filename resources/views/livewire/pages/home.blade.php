@@ -1,9 +1,11 @@
 @use(App\Support\Busyness)
 
-<div class="grid grid-rows-[max-content_1fr_max-content] min-h-dvh">
-    <div class="bg-zinc-100 rounded-b-xl pt-12 pb-6">
+<div class="min-h-dvh flex flex-col">
+    <div class="p-6">
         <h1 class="text-4xl font-serif text-center">
-            Is <span class="text-accent">Tufts</span> Busy?
+            <span>Is</span>
+            <span class="text-accent">Tufts</span>
+            <span>Busy?</span>
         </h1>
     </div>
 
@@ -43,9 +45,14 @@
         @endforeach
     </flux:accordion>
 
-    <div class="bg-zinc-100 rounded-t-xl p-4">
-        <p class="text-sm text-zinc-500 font-medium text-center">
-            Made by Dan Bergen, Alex Williams-Ferreira, Jerome Paulos, and Ben Borgers.
-        <p>
+    <div class="p-4 border-t border-zinc-800/10 mt-auto">
+        <p class="text-sm text-zinc-500 font-medium text-center text-balance *:text-nowrap">
+            Built by
+            <span>Dan Bergen</span>,
+            <a href="https://benborgers.com" class="underline decoration-zinc-300">Ben Borgers</a>,
+            <a href="https://jero.zone" class="underline decoration-zinc-300">Jerome Paulos</a>,
+            and <span>Alex Williams-Ferreira</span>
+            at <a href="https://jumbohack.org" class="underline decoration-zinc-300">JumboHack</a> 2025.
+        </p>
     </div>
 </div>

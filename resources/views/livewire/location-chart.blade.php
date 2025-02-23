@@ -1,4 +1,6 @@
-<canvas id="chart-{{ $this->id() }}"></canvas>
+<div>
+    <canvas id="chart-{{ $this->id() }}"></canvas>
+</div>
 
 @script
     <script>
@@ -35,7 +37,10 @@
                     x: {
                         ticks: {
                             maxTicksLimit: 5,
-                            align: 'start'
+                            align: 'start',
+                            font: {
+                                family: "'Clash Grotesk'"
+                            }
                         }
                     },
                     y: { display: false }
