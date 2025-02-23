@@ -10,6 +10,8 @@
 
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     @vite(['resources/css/app.css'])
+
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&display=swap" rel="stylesheet">
 </head>
 
 <body class="sm:max-w-lg mx-auto p-8 antialiased">

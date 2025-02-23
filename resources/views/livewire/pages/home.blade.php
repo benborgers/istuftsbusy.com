@@ -6,9 +6,8 @@
             <flux:accordion.item>
                 <flux:accordion.heading>
                     <div class="flex gap-4 justify-between items-center">
-                        <div class="line-clamp-1">
-                            <span class="font-semibold">{{ $location->informal_name }}</span>
-                            <span class="text-gray-400 font-normal">{{ $location->name }}</span>
+                        <div class="line-clamp-1 text-lg">
+                            <span>{{ $location->informal_name }}</span>
                         </div>
 
                         @php($busyness = $location->busyness)
