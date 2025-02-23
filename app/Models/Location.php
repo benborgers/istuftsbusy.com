@@ -41,7 +41,11 @@ class Location extends Model
         $averages = [];
 
         for($i = 0; $i < count($oneWeekAgo); $i++) {
-            $averages[$i] = ($oneWeekAgo[$i] + $twoWeeksAgo[$i]) / 2;
+            if(empty($oneWeekAgo[$i]) || empty($twoWeeksAgo[$i])) {
+                $averages[$i] = $oneWeekAgo[$i] ?? $twoWeeksAgo[$i];
+            } else {
+                $averages[$i] = ($oneWeekAgo[$i] + $twoWeeksAgo[$i]) / 2;
+            }
         }
 
         return $averages;
@@ -71,8 +75,8 @@ class Location extends Model
         $numberOfIntervals = floor($start->diffInMinutes($end, absolute: true) / $interval);
         $scans = array_slice($scans, 0, $numberOfIntervals, preserve_keys: true);
 
-        // Fill in intervals missing data with zeroes
-        for($i = 0; $i < $numberOfIntervals; $i++) $scans[$i] = $scans[$i] ?? 0;
+        // Fill in intervals missing data with null
+        for($i = 0; $i < $numberOfIntervals; $i++) $scans[$i] = $scans[$i] ?? null;
 
         ksort($scans);
 

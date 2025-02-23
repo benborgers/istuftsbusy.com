@@ -25,11 +25,23 @@ class LocationChart extends Component
         for($i = 0; $i < count($pastData); $i++) {
             $date = now()->startOfDay()->setMinutes($i * 15);
 
-            $data[$i] = [
-                'time' => $date->format('g:ia'),
-                'past_value' => $pastData[$i],
-                'current_value' => $currentData[$i] ?? null
-            ];
+            $data[$i] = ['time' => $date->format('g:ia')];
+            if(!empty($pastData[$i])) $data[$i]['past_value'] = $pastData[$i];
+            if(!empty($currentData[$i])) $data[$i]['current_value'] = $currentData[$i];
+        }
+
+        foreach($data as &$point) {
+            if(!array_key_exists('past_value', $point)) {
+                $point['past_value'] = 0;
+            } else {
+                break;
+            }
+
+            if(!array_key_exists('current_value', $point)) {
+                $point['current_value'] = 0;
+            } else {
+                break;
+            }
         }
 
         return $data;
