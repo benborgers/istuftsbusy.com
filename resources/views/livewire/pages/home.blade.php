@@ -7,12 +7,13 @@
                 <flux:accordion.heading>
                     <div class="flex gap-4 justify-between items-center">
                         <div class="line-clamp-1">
-                            <span>{{ $location->informal_name }}</span>
+                            <span class="font-semibold">{{ $location->informal_name }}</span>
                             <span class="text-gray-400">{{ $location->name }}</span>
                         </div>
 
-                        <flux:badge color="{{ $location->busyness->color() }}">
-                            {{ $location->busyness->label() }}
+                        @php($busyness = $location->busyness)
+                        <flux:badge color="{{ $busyness->color() }}">
+                            {{ $busyness->label() }}
                         </flux:badge>
                     </div>
                 </flux:accordion.heading>
