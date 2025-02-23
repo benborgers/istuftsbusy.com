@@ -24,7 +24,7 @@
                                 <div class="h-2 w-2 bg-accent rounded-full"></div>
                                 <div class="absolute inset-0 h-2 w-2 bg-accent/50 rounded-full animate-ping"></div>
                             </div>
-                            <p class="text-gray-400 text-sm font-medium">
+                            <p class="text-zinc-400 text-sm font-medium">
                                 Last updated {{ $location->lastScanDate()->diffForHumans() }}
                             </p>
                         </div>
