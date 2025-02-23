@@ -9,6 +9,8 @@
         </h1>
     </div>
 
+    <hr class="border-zinc-800/10" />
+
     <flux:accordion transition exclusive>
         @foreach($this->locations as $location)
             <flux:accordion.item :expanded="$loop->first">
