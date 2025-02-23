@@ -9,6 +9,8 @@ class IngestController extends Controller
 {
     public function __invoke(Monitor $monitor)
     {
+        info('Received ingest request', [request()]);
+
         $data = request()->validate([
             'ip_address' => ['required', 'ip'],
             'scans' => ['required', 'array'],
