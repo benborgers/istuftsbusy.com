@@ -14,8 +14,21 @@
             <flux:accordion.item :expanded="$loop->first">
                 <flux:accordion.heading>
                     <div class="flex gap-4 justify-between items-center">
-                        <div class="line-clamp-1 text-lg">
-                            <span>{{ $location->informal_name }}</span>
+                        <div class="line-clamp-1 text-lg leading-none">
+                            <p>{{ $location->name }}</p>
+
+                            @if($location->lastScanDate())
+                                <div class="flex gap-2 items-center ml-1">
+                                    <div class="relative *:size-2 *:rounded-full">
+                                        <div class="bg-accent"></div>
+                                        <div class="absolute animate-ping inset-0 bg-accent/50"></div>
+                                    </div>
+
+                                    <p class="text-zinc-400 text-sm font-medium">
+                                        {{ $location->lastScanDate()->diffForHumans() }}
+                                    </p>
+                                </div>
+                            @endif
                         </div>
 
                         @php($busyness = $location->currentBusyness())
@@ -26,20 +39,7 @@
                 </flux:accordion.heading>
 
                 <flux:accordion.content>
-                    @if ($location->lastScanDate())
-                        <div class="flex gap-2 items-center ml-1">
-                            <div class="relative">
-                                <div class="h-2 w-2 bg-accent rounded-full"></div>
-                                <div class="absolute inset-0 h-2 w-2 bg-accent/50 rounded-full animate-ping"></div>
-                            </div>
-                            <p class="text-zinc-400 text-sm font-medium">
-                                Last updated {{ $location->lastScanDate()->diffForHumans() }}
-                            </p>
-                        </div>
-                    @endif
-                    <div class="mt-1">
-                        <livewire:location-chart :$location />
-                    </div>
+                    <livewire:location-chart :$location />
                 </flux:accordion.content>
             </flux:accordion.item>
         @endforeach
