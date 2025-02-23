@@ -16,7 +16,7 @@
     @fluxAppearance
 </head>
 
-<body class="sm:max-w-lg mx-auto p-8 antialiased">
+<body class="sm:max-w-lg mx-auto p-4 antialiased">
     {{ $slot }}
 
     @fluxScripts
