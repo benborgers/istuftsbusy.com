@@ -24,8 +24,6 @@ class LocationChart extends Component
 
         $data = [];
 
-        srand(1);
-
         foreach($currentData as $time => $count) {
             $datum = [
                 'time' => Carbon::parse($time)->timezone('America/New_York')->format('g:i a')
@@ -40,8 +38,6 @@ class LocationChart extends Component
 
             $data[] = $datum;
         }
-
-        srand();
 
         return $data;
     }

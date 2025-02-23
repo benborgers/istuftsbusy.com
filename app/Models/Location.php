@@ -37,19 +37,16 @@ class Location extends Model
             $interval
         );
 
-        assert(count($oneWeekAgo) === count($twoWeeksAgo));
+        srand(1);
 
-        $averages = [];
+        $fakeData = array_map(
+            fn() => rand(100, 1000),
+            $oneWeekAgo
+        );
 
-        for($i = 0; $i < count($oneWeekAgo); $i++) {
-            if(empty($oneWeekAgo[$i]) || empty($twoWeeksAgo[$i])) {
-                $averages[$i] = $oneWeekAgo[$i] ?? $twoWeeksAgo[$i];
-            } else {
-                $averages[$i] = ($oneWeekAgo[$i] + $twoWeeksAgo[$i]) / 2;
-            }
-        }
+        srand();
 
-        return $averages;
+        return $fakeData;
     }
 
     /**
