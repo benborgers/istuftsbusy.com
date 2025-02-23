@@ -48,13 +48,13 @@
     <hr class="border-zinc-800/10 mt-auto" />
 
     <div>
-        <p class="text-sm text-zinc-500 font-medium text-center text-balance *:text-nowrap">
+        <p class="text-sm text-zinc-500 dark:text-zinc-400 font-medium text-center text-balance *:text-nowrap">
             Built by
             <span>Dan Bergen</span>,
-            <a href="https://benborgers.com" class="underline decoration-zinc-300">Ben Borgers</a>,
-            <a href="https://jero.zone" class="underline decoration-zinc-300">Jerome Paulos</a>,
+            <a href="https://benborgers.com" class="underline decoration-zinc-300 dark:decoration-zinc-500">Ben Borgers</a>,
+            <a href="https://jero.zone" class="underline decoration-zinc-300 dark:decoration-zinc-500">Jerome Paulos</a>,
             and <span>Alex Williams-Ferreira</span>
-            at <a href="https://jumbohack.org" class="underline decoration-zinc-300">JumboHack</a> 2025.
+            at <a href="https://jumbohack.org" class="underline decoration-zinc-300 dark:decoration-zinc-500">JumboHack</a> 2025.
         </p>
     </div>
 </div>
