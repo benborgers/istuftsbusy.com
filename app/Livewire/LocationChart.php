@@ -75,6 +75,10 @@ class LocationChart extends Component
                     </flux:chart.tooltip>
                 </flux:chart.viewport>
             </flux:chart>
+
+            <script>
+                console.log(@json($this->data));
+            </script>
         BLADE;
     }
 }
