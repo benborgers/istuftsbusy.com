@@ -26,14 +26,14 @@ class Location extends Model
     public function averageScanCountsForLastTwoWeeks(int $interval): array
     {
         $oneWeekAgo = $this->scanCountsForRange(
-            now()->subWeek()->startOfDay(),
-            now()->subWeek()->endOfDay(),
+            now('America/New_York')->subWeek()->startOfDay(),
+            now('America/New_York')->subWeek()->endOfDay(),
             $interval
         );
 
         $twoWeeksAgo = $this->scanCountsForRange(
-            now()->subWeeks(2)->startOfDay(),
-            now()->subWeeks(2)->endOfDay(),
+            now('America/New_York')->subWeeks(2)->startOfDay(),
+            now('America/New_York')->subWeeks(2)->endOfDay(),
             $interval
         );
 

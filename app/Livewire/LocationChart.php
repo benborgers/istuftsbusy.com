@@ -21,7 +21,7 @@ class LocationChart extends Component
 
         $pastData = $this->location->averageScanCountsForLastTwoWeeks($interval);
         // $currentData = $this->location->scanCountsForRange(now()->startOfDay(), now(), $interval);
-        $currentData = $this->location->scanCountsForRange(now()->startOfDay(), now()->endOfDay(), $interval);
+        $currentData = $this->location->scanCountsForRange(now('America/New_York')->startOfDay(), now('America/New_York')->endOfDay(), $interval);
 
         $firstDataIndex = collect($currentData)->values()->search(fn($v) => $v !== null);
 
