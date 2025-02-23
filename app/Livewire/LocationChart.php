@@ -19,22 +19,32 @@ class LocationChart extends Component
     {
         $interval = 15; // minutes
 
-        // $pastData = $this->location->averageScanCountsForLastTwoWeeks($interval);
-        $currentData = $this->location->scanCountsForRange(now()->startOfDay(), now(), $interval);
+        $pastData = $this->location->averageScanCountsForLastTwoWeeks($interval);
+        // $currentData = $this->location->scanCountsForRange(now()->startOfDay(), now(), $interval);
+        $currentData = $this->location->scanCountsForRange(now()->startOfDay(), now()->endOfDay(), $interval);
+
+        $firstDataIndex = collect($currentData)->values()->search(fn($v) => $v !== null);
+
+        $pastData = array_slice($pastData, $firstDataIndex);
+        $currentData = array_slice($currentData, $firstDataIndex);
 
         $data = [];
 
-        foreach($currentData as $time => $count) {
+        for($i = 0; $i < count($pastData); $i++) {
+            $pastKey = array_keys($pastData)[$i];
+            $currentKey = array_keys($currentData)[$i];
+
+            $pastCount = $pastData[$pastKey];
+            $currentCount = $currentData[$currentKey];
+
+            $time = Carbon::parse($pastKey);
+
             $datum = [
-                'time' => Carbon::parse($time)->timezone('America/New_York')->format('g:i a')
+                'time' => $time->timezone('America/New_York')->format('g:i a')
             ];
 
-            if($count !== null) {
-                $datum['current_value'] = $count;
-                $datum['past_value'] = $count * rand(50, 150) / 100;
-            } else {
-                $datum['past_value'] = rand(100, 200);
-            }
+            if($pastCount !== null) $datum['past_value'] = $pastCount;
+            if($currentCount !== null) $datum['current_value'] = $currentCount;
 
             $data[] = $datum;
         }
