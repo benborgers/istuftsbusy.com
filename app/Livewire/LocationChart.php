@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Location;
+use Carbon\CarbonInterval;
 use Illuminate\Support\Carbon;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
@@ -26,11 +27,18 @@ class LocationChart extends Component
         srand(1);
 
         foreach($currentData as $time => $count) {
-            $data[] = [
-                'time' => Carbon::parse($time)->timezone('America/New_York')->format('g:i a'),
-                'current_value' => $count,
-                'past_value' => $count * rand(50, 150) / 100
+            $datum = [
+                'time' => Carbon::parse($time)->timezone('America/New_York')->format('g:i a')
             ];
+
+            if($count !== null) {
+                $datum['current_value'] = $count;
+                $datum['past_value'] = $count * rand(50, 150) / 100;
+            } else {
+                $datum['past_value'] = rand(100, 200);
+            }
+
+            $data[] = $datum;
         }
 
         srand();

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Support\Busyness;
 use Carbon\CarbonImmutable;
+use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -54,7 +55,7 @@ class Location extends Model
     /**
      * @param CarbonImmutable $start
      * @param CarbonImmutable $end
-     * @param int $interval The windowing interval in minutes
+     * @param int $interval The windowing interval in minutes, must be less than 60
      */
     public function scanCountsForRange($start, $end, int $interval): array
     {
@@ -67,14 +68,22 @@ class Location extends Model
             ->orderBy('hour')
             ->orderBy('time_interval')
             ->get()
-            ->keyBy(fn($scan) => $start->addHours($scan->hour)->addMinutes($scan->time_interval * $interval))
+            ->keyBy(fn($scan) => $start->addHours($scan->hour)->addMinutes($scan->time_interval * $interval)->toISOString())
             ->map->count
             ->toArray();
 
+        $period = CarbonPeriod::dates($start, $end);
+
         // We floor this so we don't include incomplete intervals
-        $numberOfIntervals = round($start->diffInMinutes($end, absolute: true) / $interval);
+        // TODO: How does this handle incomplete intervals? (We would want it to exclude them.)
+        $numberOfIntervals = $period->minutes($interval)->count();
         $scans = array_slice($scans, 0, $numberOfIntervals, preserve_keys: true);
 
+        // Set intervals missing data to null
+        foreach($period->minutes($interval) as $time) {
+            $scans[$time->toISOString()] ??= null;
+        }
+        
         ksort($scans);
 
         return $scans;
