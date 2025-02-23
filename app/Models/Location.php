@@ -65,7 +65,7 @@ class Location extends Model
         return $scans;
     }
 
-    public function lastScanDate(): CarbonImmutable
+    public function lastScanDate(): CarbonImmutable | null
     {
         return $this->scans()->latest()->first()?->created_at;
     }
