@@ -13,11 +13,6 @@ class Location extends Model
 {
     use HasFactory;
 
-    public function getBusynessAttribute(): Busyness
-    {
-        return collect(Busyness::cases())->random();
-    }
-
     /**
      * @param int $n The number of data points to generate
      * @param int $min
@@ -59,7 +54,7 @@ class Location extends Model
 
         $range = match($this->informal_name) {
             'Cummings' => [50, 700],
-            'Fitness Center' => [20, 100]
+            'Fitness Center' => [50, 300]
         };
 
         return $this->generateRandomData(1440/$interval, ...$range);
