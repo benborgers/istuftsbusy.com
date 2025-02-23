@@ -1,1 +1,36 @@
 TODO: Dan and Alex brain dump here
+
+
+Setup:
+	## Package set up
+
+	# this is for airmon and to set wifi into monitor adapter
+	sudo apt install aircrack-ng
+
+	# for packet sniffing
+	sudo apt install python3-scapy
+
+	# set up time sync
+	sudo apt install ntp
+
+	sudo systemctl restart ntp
+
+	sudo systemctl status ntp
+		#See that its working
+	reboot
+
+	# prepare reboot sequence
+	copy prepare-wlan1.service to /etc/systemd/system/prepare-wlan1.service
+
+	sudo systemctl daemon-reload
+	sudo systemctl enable prepare-wlan1.service
+	sudo systemctl start prepare-wlan1.service
+
+	# set up is now done for packages (yay!)
+
+	## Scripts set up
+	# Who needs modularity! We have some directly hard coded things so some things might need to happen
+
+	1. use iw list to insure that wifi adapter has monitor mode.
+	2. use iwconfig to isure that names a line with our code. If wlan0 and wlan1 doesn't align please change
+	3. change pathing in start.sh and prepare-wlan1.service to align with system set up.

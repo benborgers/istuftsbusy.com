@@ -1,0 +1,10 @@
+[Unit]
+Description=Prepare wlan1 for monitor mode and run custom script
+After=network-manager.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/start.sh
+
+[Install]
+WantedBy=multi-user.target
