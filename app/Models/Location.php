@@ -53,7 +53,7 @@ class Location extends Model
         // );
 
         $range = match($this->informal_name) {
-            'Cummings' => [50, 700],
+            'Cummings' => [50, 1200],
             'Fitness Center' => [50, 500]
         };
 
