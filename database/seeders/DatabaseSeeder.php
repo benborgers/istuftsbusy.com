@@ -20,15 +20,18 @@ class DatabaseSeeder extends Seeder
         $locations = [
             [
                 'name' => 'Joyce Cummings Center',
-                'informal_name' => 'JCC'
+                'informal_name' => 'JCC',
+                'order' => 0
             ],
             [
                 'name' => 'Tisch Sports and Fitness Center',
-                'informal_name' => 'Gym'
+                'informal_name' => 'Gym',
+                'order' => 1
             ],
             [
                 'name' => 'Tisch Library',
-                'informal_name' => 'Tisch Library'
+                'informal_name' => 'Tisch Library',
+                'order' => 2
             ]
         ];
 
