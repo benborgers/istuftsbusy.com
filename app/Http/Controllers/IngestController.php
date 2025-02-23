@@ -14,7 +14,7 @@ class IngestController extends Controller
         try {
             $data = request()->validate([
                 'ip_address' => ['required', 'ip'],
-                'scans' => ['required', 'array'],
+                'scans' => ['array'],
                 'scans.*.timestamp_ms' => ['required', 'int'],
                 'scans.*.mac_address' => ['required', 'mac_address'],
                 'scans.*.ssid' => ['nullable', 'string']
