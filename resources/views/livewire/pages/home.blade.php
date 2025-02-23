@@ -12,7 +12,7 @@
     <flux:accordion transition exclusive>
         @foreach($this->locations as $location)
             <flux:accordion.item :expanded="$loop->first">
-                <flux:accordion.heading class="hover:bg-zinc-600/5 rounded-lg p-2 -m-2 transition-colors">
+                <flux:accordion.heading class="hover:bg-zinc-600/5 rounded-lg p-2 transition-colors">
                     <div class="flex gap-4 justify-between items-center">
                         <div class="line-clamp-1 text-lg leading-none">
                             <p>{{ $location->informal_name }}</p>
