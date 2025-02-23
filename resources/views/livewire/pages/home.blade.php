@@ -18,15 +18,17 @@
                 </flux:accordion.heading>
 
                 <flux:accordion.content>
-                    <div class="flex gap-2 items-center">
-                        <div class="relative">
-                            <div class="h-2 w-2 bg-accent rounded-full"></div>
-                            <div class="absolute inset-0 h-2 w-2 bg-accent/50 rounded-full animate-ping"></div>
+                    @if ($location->lastScanDate())
+                        <div class="flex gap-2 items-center">
+                            <div class="relative">
+                                <div class="h-2 w-2 bg-accent rounded-full"></div>
+                                <div class="absolute inset-0 h-2 w-2 bg-accent/50 rounded-full animate-ping"></div>
+                            </div>
+                            <p class="text-gray-400 text-sm font-medium">
+                                Last updated {{ $location->lastScanDate()->diffForHumans() }}
+                            </p>
                         </div>
-                        <p class="text-gray-400 text-sm font-medium">
-                            Last updated {{ $location->lastScanDate()->diffForHumans() }}
-                        </p>
-                    </div>
+                    @endif
                     <div class="mt-1">
                         <livewire:location-chart :$location />
                     </div>
