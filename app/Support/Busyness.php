@@ -15,7 +15,7 @@ enum Busyness
             self::Least => 'Empty',
             self::Less => 'Not Busy',
             self::Normal => 'Medium Busy',
-            self::More => 'Very  Busy'
+            self::More => 'Very Busy'
         };
     }
 
