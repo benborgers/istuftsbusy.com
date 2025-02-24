@@ -68,9 +68,9 @@ class Location extends Model
     public function scanCountsForRange($start, $end, int $interval): array
     {
         $scans = $this->scans()
-            ->whereBetween('scan_at', [$start, $end])
-            ->selectRaw('HOUR(scan_at) as hour')
-            ->selectRaw('FLOOR(MINUTE(scan_at) / ?) as time_interval', [$interval])
+            ->whereBetween('created_at', [$start, $end])
+            ->selectRaw('HOUR(created_at) as hour')
+            ->selectRaw('FLOOR(MINUTE(created_at) / ?) as time_interval', [$interval])
             ->selectRaw('COUNT(DISTINCT mac_address) as count')
             ->groupBy('hour', 'time_interval')
             ->orderBy('hour')
