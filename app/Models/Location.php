@@ -103,15 +103,15 @@ class Location extends Model
     {
         $interval = 15;
 
-        // return cache()->remember("busyness-{$interval}-{$this->id}", now()->ceilMinutes($interval), function() use ($interval) {
+        return cache()->remember("busyness-{$interval}-{$this->id}", now()->ceilMinutes($interval), function() use ($interval) {
             // array_filter to remove null values
             $comparison = array_filter(array_values($this->averageScanCountsForLastTwoWeeks($interval)));
             $totalComparisonValues = count($comparison);
 
             // There's no historical data
             if ($totalComparisonValues === 0) {
-            $comparison = array_filter(array_values($this->scanCountsForRange(now()->startOfDay(), now(), $interval)));
-            $totalComparisonValues = count($comparison);
+                $comparison = array_filter(array_values($this->scanCountsForRange(now()->startOfDay(), now(), $interval)));
+                $totalComparisonValues = count($comparison);
             }
 
             // There's no historical data AND no current data
@@ -144,7 +144,7 @@ class Location extends Model
             } else {
                 return Busyness::More;
             }
-        // });
+        });
     }
 
     public function lastScanDate(): CarbonImmutable | null

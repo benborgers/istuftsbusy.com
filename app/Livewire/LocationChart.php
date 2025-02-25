@@ -19,7 +19,7 @@ class LocationChart extends Component
     {
         $interval = 15; // minutes
 
-        // return cache()->remember("chart-data-{$interval}-{$this->location->id}", now()->ceilMinutes($interval), function() use ($interval) {
+        return cache()->remember("chart-data-{$interval}-{$this->location->id}", now()->ceilMinutes($interval), function() use ($interval) {
             $pastData = $this->location->averageScanCountsForLastTwoWeeks($interval);
             $currentData = $this->location->scanCountsForRange(now('America/New_York')->startOfDay(), now('America/New_York')->endOfDay(), $interval);
             assert(count($pastData) === count($currentData));
@@ -41,6 +41,6 @@ class LocationChart extends Component
             }
     
             return $data;
-        // });
+        });
     }
 }
