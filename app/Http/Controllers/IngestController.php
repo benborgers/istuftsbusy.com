@@ -19,19 +19,23 @@ class IngestController extends Controller
             'scans.*.ssid' => ['nullable', 'string']
         ]);
 
-        if ($data['ip_address']) {
+        if($data['ip_address']) {
             $monitor->update([
                 'ip_address' => $data['ip_address']
             ]);
         }
 
+        // We only store scans without an SSID
+        // These are more likely to be mobile devices instead of WAPs
+        // It also cuts down the number of scans we need to store by a lot
         $monitor->scans()->createMany(
-            collect($data['scans'])->map(fn($scan) => [
-                'location_id' => $monitor->location_id,
-                'mac_address' => $scan['mac_address'],
-                'ssid' => $scan['ssid'],
-                'scan_at' => Carbon::createFromTimestampMs($scan['timestamp_ms'])
-            ])
+            collect($data['scans'])
+                ->whereNull('ssid')
+                ->map(fn($scan) => [
+                    'location_id' => $monitor->location_id,
+                    'mac_address' => $scan['mac_address'],
+                    'scan_at' => Carbon::createFromTimestampMs($scan['timestamp_ms'])
+                ])
         );
 
         return response()->noContent();
