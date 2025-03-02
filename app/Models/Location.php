@@ -142,15 +142,10 @@ class Location extends Model
 
         $percentile = $comparisonValuesLessThanCurrent / $totalComparisonValues;
 
-        if ($percentile < 0.2) {
-            return Busyness::Least;
-        } elseif ($percentile < 0.4) {
-            return Busyness::Less;
-        } elseif ($percentile < 0.6) {
-            return Busyness::Medium;
-        } else {
-            return Busyness::More;
-        }
+        if($percentile < 0.2) return Busyness::Least;
+        if($percentile < 0.4) return Busyness::Less;
+        if($percentile < 0.6) return Busyness::Medium;
+        return Busyness::More;
     }
 
     public function lastScanDate(): CarbonImmutable | null
