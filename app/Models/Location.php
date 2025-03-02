@@ -70,15 +70,21 @@ class Location extends Model
         // We use created_at instead of scan_at because the Raspberry Pi clocks are unreliable
 
         $scans = $this->scans()
-            ->whereBetween('created_at', [$start, $end])
-            ->selectRaw('HOUR(created_at) as hour')
-            ->selectRaw('FLOOR(MINUTE(created_at) / ?) as time_interval', [$interval])
+            ->whereBetween('created_at', [$start->toISOString(), $end->toISOString()])
+            ->selectRaw('HOUR(created_at) as utc_hour')
+            ->selectRaw('FLOOR(MINUTE(created_at) / ?) as interval_offset_within_hour', [$interval])
             ->selectRaw('COUNT(DISTINCT mac_address) as count')
-            ->groupBy('hour', 'time_interval')
-            ->orderBy('hour')
-            ->orderBy('time_interval')
+            ->groupBy('utc_hour', 'interval_offset_within_hour')
+            ->orderBy('utc_hour')
+            ->orderBy('interval_offset_within_hour')
             ->get()
-            ->keyBy(fn($scan) => $start->addHours($scan->hour)->addMinutes($scan->time_interval * $interval)->toISOString())
+            ->keyBy(function($scan) use($start, $interval) {
+                return $start
+                    ->timezone('UTC')->startOfDay()
+                    ->addHours($scan->utc_hour)
+                    ->addMinutes($scan->interval_offset_within_hour * $interval)
+                    ->toISOString();
+            })
             ->map->count;
 
         // Remove the current interval because we don't have full data
