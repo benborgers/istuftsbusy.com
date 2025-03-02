@@ -10,8 +10,8 @@ return new class extends Migration
     {
         Schema::table('scans', function (Blueprint $table) {
             $table->index(
-                columns: ['created_at', 'location_id'],
-                name: 'scans_created_at_location_id_index',
+                columns: ['location_id', 'created_at'],
+                name: 'scans_location_id_created_at_index',
                 algorithm: 'btree'
             );
         });
@@ -20,7 +20,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('scans', function (Blueprint $table) {
-            $table->dropIndex('scans_created_at_location_id_index');
+            $table->dropIndex('scans_location_id_created_at_index');
         });
     }
 };
