@@ -105,48 +105,46 @@ class Location extends Model
     {
         $interval = 15;
 
-        return cache()->remember("busyness-{$interval}-{$this->id}", now()->ceilMinutes($interval), function() use ($interval) {
-            // array_filter to remove null values
-            $comparison = array_filter(array_values($this->averageScanCountsForLastTwoWeeks($interval)));
+        // array_filter to remove null values
+        $comparison = array_filter(array_values($this->averageScanCountsForLastTwoWeeks($interval)));
+        $totalComparisonValues = count($comparison);
+
+        // There's no historical data
+        if ($totalComparisonValues === 0) {
+            $comparison = array_filter(array_values($this->scanCountsForRange(now()->startOfDay(), now(), $interval)));
             $totalComparisonValues = count($comparison);
+        }
 
-            // There's no historical data
-            if ($totalComparisonValues === 0) {
-                $comparison = array_filter(array_values($this->scanCountsForRange(now()->startOfDay(), now(), $interval)));
-                $totalComparisonValues = count($comparison);
+        // There's no historical data AND no current data
+        if ($totalComparisonValues === 0) {
+            return Busyness::Least;
+        }
+
+        $currentCount = last(array_filter(array_values($this->scanCountsForRange(
+            now()->startOfDay(),
+            now(),
+            $interval
+        ))));
+
+        $comparisonValuesLessThanCurrent = 0;
+
+        foreach ($comparison as $value) {
+            if ($value < $currentCount) {
+                $comparisonValuesLessThanCurrent++;
             }
+        }
 
-            // There's no historical data AND no current data
-            if ($totalComparisonValues === 0) {
-                return Busyness::Least;
-            }
+        $percentile = $comparisonValuesLessThanCurrent / $totalComparisonValues;
 
-            $currentCount = last(array_filter(array_values($this->scanCountsForRange(
-                now()->startOfDay(),
-                now(),
-                $interval
-            ))));
-
-            $comparisonValuesLessThanCurrent = 0;
-
-            foreach ($comparison as $value) {
-                if ($value < $currentCount) {
-                    $comparisonValuesLessThanCurrent++;
-                }
-            }
-
-            $percentile = $comparisonValuesLessThanCurrent / $totalComparisonValues;
-
-            if ($percentile < 0.2) {
-                return Busyness::Least;
-            } elseif ($percentile < 0.4) {
-                return Busyness::Less;
-            } elseif ($percentile < 0.6) {
-                return Busyness::Medium;
-            } else {
-                return Busyness::More;
-            }
-        });
+        if ($percentile < 0.2) {
+            return Busyness::Least;
+        } elseif ($percentile < 0.4) {
+            return Busyness::Less;
+        } elseif ($percentile < 0.6) {
+            return Busyness::Medium;
+        } else {
+            return Busyness::More;
+        }
     }
 
     public function lastScanDate(): CarbonImmutable | null
