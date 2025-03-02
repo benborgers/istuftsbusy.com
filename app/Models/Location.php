@@ -111,36 +111,19 @@ class Location extends Model
     {
         $interval = 15;
 
-        // array_filter to remove null values
-        $comparison = array_filter(array_values($this->averageScanCountsForLastTwoWeeks($interval)));
-        $totalComparisonValues = count($comparison);
+        $comparison = collect($this->averageScanCountsForLastTwoWeeks($interval));
 
-        // There's no historical data
-        if ($totalComparisonValues === 0) {
-            $comparison = array_filter(array_values($this->scanCountsForRange(now('America/New_York')->startOfDay(), now('America/New_York'), $interval)));
-            $totalComparisonValues = count($comparison);
-        }
+        // Remove null values (i.e. intervals with no data)
+        $comparison = $comparison->values()->filter();
+        if($comparison->isEmpty()) return null;
 
-        // There's no historical data AND no current data
-        if ($totalComparisonValues === 0) {
-            return Busyness::Least;
-        }
+        $current = collect($this->scanCountsForRange(now('America/New_York')->startOfDay(), now('America/New_York'), $interval));
+        $current = $current->values()->filter();
 
-        $currentCount = last(array_filter(array_values($this->scanCountsForRange(
-            now('America/New_York')->startOfDay(),
-            now('America/New_York'),
-            $interval
-        ))));
+        $currentCount = $current->last();
 
-        $comparisonValuesLessThanCurrent = 0;
-
-        foreach ($comparison as $value) {
-            if ($value < $currentCount) {
-                $comparisonValuesLessThanCurrent++;
-            }
-        }
-
-        $percentile = $comparisonValuesLessThanCurrent / $totalComparisonValues;
+        $comparisonValuesLessThanCurrent = $comparison->filter(fn($value) => $value < $currentCount)->count();
+        $percentile = $comparisonValuesLessThanCurrent / $comparison->count();
 
         if($percentile < 0.2) return Busyness::Least;
         if($percentile < 0.4) return Busyness::Less;
