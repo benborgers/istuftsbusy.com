@@ -53,8 +53,8 @@ class Location extends Model
         // );
 
         $range = match($this->informal_name) {
-            'Cummings' => [50, 1200],
-            'Fitness Center' => [50, 500]
+            'Cummings' => [25, 750],
+            'Fitness Center' => [25, 300]
         };
 
         return $this->generateRandomData(1440/$interval, ...$range);
@@ -111,7 +111,7 @@ class Location extends Model
 
         // There's no historical data
         if ($totalComparisonValues === 0) {
-            $comparison = array_filter(array_values($this->scanCountsForRange(now()->startOfDay(), now(), $interval)));
+            $comparison = array_filter(array_values($this->scanCountsForRange(now('America/New_York')->startOfDay(), now('America/New_York'), $interval)));
             $totalComparisonValues = count($comparison);
         }
 
@@ -121,8 +121,8 @@ class Location extends Model
         }
 
         $currentCount = last(array_filter(array_values($this->scanCountsForRange(
-            now()->startOfDay(),
-            now(),
+            now('America/New_York')->startOfDay(),
+            now('America/New_York'),
             $interval
         ))));
 
