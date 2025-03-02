@@ -29,8 +29,11 @@
         </flux:badge>
     @else
         @php($busyness = $location->currentBusyness())
-        <flux:badge color="{{ $busyness->color() }}">
-            {{ $busyness->label() }}
-        </flux:badge>
+
+        @if($busyness !== null)
+            <flux:badge color="{{ $busyness->color() }}">
+                {{ $busyness->label() }}
+            </flux:badge>
+        @endif
     @endif
 </div>

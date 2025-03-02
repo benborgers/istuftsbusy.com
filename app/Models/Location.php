@@ -107,7 +107,7 @@ class Location extends Model
         return $scans;
     }
 
-    public function currentBusyness(): Busyness
+    public function currentBusyness(): ?Busyness
     {
         $interval = 15;
 
